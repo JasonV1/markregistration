@@ -20,12 +20,20 @@
 		//echo $controller;
 		//var_dump($urlArray);
 		$dispatch = new $controller($model, $controllerName, $action);
+		//echo method_exists($controller, $action);
+		if ( method_exists($controller, $action) )
+		{
+			call_user_func_array(array($dispatch, $action), $queryString);
+			//call_user_func_array(array(new UsersController, 'addUser'), array(1,2,3))
+		}
+		else
+		{
+			echo "De methode ".$action." is niet gevonden of de argumentenlijst kan meegegeven waarde niet ontvangen";
+		}
 	}
 	
 	function __autoload($classname)
-	{
-		echo "Justice.".strtolower($classname);
-		
+	{		
 		if ( file_exists(ROOT.DS.'libary'.DS.strtolower($classname).'.class.php'))
 		{
 			require_once(ROOT.DS.'libary'.DS.strtolower($classname).'.class.php');

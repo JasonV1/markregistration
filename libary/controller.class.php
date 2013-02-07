@@ -7,7 +7,7 @@
 	protected $_action;
 	
 	//Constructor wordt aangeroepen omdat de UsersController class er geen heeft
-	public function __construct($model, $controllerName, $action)
+	public function __construct($model, $controller, $action)
 	{
 		$this->_model = new $model(); //Er wordt een instantie gemaakt vna de User class
 		//$this->_model = new User();

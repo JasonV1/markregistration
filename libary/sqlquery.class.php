@@ -40,15 +40,15 @@
 			for ( $i = 0; $i < $numOfFields; $i++)
 			{
 				array_push($table, mysql_field_table($this->_result, $i));
-				array_push($field, mysql_field_name(this->_result, $i));
+				array_push($field, mysql_field_name($this->_result, $i));
 			}
 			
-			while ($row, mysql_fetch_row($this->_result))
+			while ($row = mysql_fetch_row($this->_result))
 			{
 				for ($i = 0; $i < $numOfFields; $i++)
 				{
-					$table[$i] = trim(ucFirst($table[$i], "s"));
-					$tempResults[$table[$i][$fields[$i]]] = $row[$i];
+					$table[$i] = trim(ucFirst($table[$i]), "s");
+					$tempResults[$table[$i]][$field[$i]] = $row[$i];
 				}
 				if ($singleResult == 1)
 				{

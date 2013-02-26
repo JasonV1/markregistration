@@ -4,7 +4,7 @@
 	define('ROOT', dirname(dirname(__FILE__)));
 	//echo ROOT;
 	//ternary operator
-	$url = (isset($_GET['url']) ? $_GET['url'] : header("location:./users/adduser"));
+	$url = (isset($_GET['url']) ? $_GET['url'] : header("location:./users/viewall"));
 	//echo $url;
 	require_once(ROOT.DS.'libary'.DS.'bootstrap.php');
 ?>

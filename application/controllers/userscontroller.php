@@ -58,9 +58,19 @@
 	
 	public function updateuser($id)
 	{
+		if (isset($_POST['submit']))
+		{
+			//var_dump($_POST);
+			$user = $this->_model->updateuser($_POST, $id);
+			header('location:../viewall');
+		}
 		$this->set('header', 'Wijzig record');
 		$user = $this->_model->finduser($id);
-		var_dump($user);
+		$this->set('id', $user[0]['User']['id']);
+		$this->set('firstname', $user[0]['User']['firstname']);
+		$this->set('infix', $user[0]['User']['infix']);
+		$this->set('surname', $user[0]['User']['surname']);
+		//var_dump($user);
 	}
  }
 ?>

@@ -6,6 +6,15 @@
 		return $this->query("select * from users");
 	}
 	
+	public function updateuser($post, $id)
+	{
+		$query = "UPDATE `users` SET `firstname` = '".$post['firstname']."',
+									 `infix` = '".$post['infix']."',
+									 `surname` = '".$post['surname']."'
+					WHERE `id` = '".$id."'";
+		$this->query($query);
+	}
+	
 	public function removeuser($id)
 	{
 		$query = "DELETE FROM `users` WHERE `id` = '".$id."'";

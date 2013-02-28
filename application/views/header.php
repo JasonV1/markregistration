@@ -2,6 +2,11 @@
 <html>
 	<head>
 		<title>MVC Framework</title>
+		<link rel='stylesheet' href='<?php echo BASE_URL; ?>css/style.css' type='text/css' />
 	</head>
 	<body>
-	<p><h1>Time to kiss your ass goodbye</h1></p>
+		<div id='container'>
+			<div id='banner'>
+				<?php include("banner.php"); ?>
+			</div>
+			<div id='content'>

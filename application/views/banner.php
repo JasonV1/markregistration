@@ -1,1 +1,1 @@
-<p><h1>Time to kiss your ass goodbye</h1></p>
+<p><h1>Hier kommt die Sonne...</h1></p>

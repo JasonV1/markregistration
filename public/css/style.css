@@ -1,4 +1,63 @@
+*
+{
+	padding:0px;
+	margin:0px;
+}
+
 body
 {
-	font-size:2em;
+	font-family:Arial;
+	font-size:12px;
 }
+
+#container
+{
+	border:1px solid red;
+	width:60%;
+	margin:auto;
+	margin-top:20px;
+}
+
+#banner, #footer
+{
+	border:1px solid red;
+	text-align:center;
+}
+
+#content
+{
+	border:1px solid blue;
+	min-height:300px;
+	position:relative;
+	width:60%;
+	margin:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+.viewall
+{
+	border:0px solid;
+}
+
+#link
+{
+	border:1px solid purple;
+	position:absolute;
+	right:780px;
+}
+
+#link ul
+{
+	list-style-type:none;
+}
+
+#link li
+{
+	text-align:right;
+}
+
+#link a:link { text-decoration:none; color:red;}
+#link a:visited { text-decoration: none; color: red;}
+#link a:hover { background-color:black;}
+#link a:active { text-decoration: none; color: red;}

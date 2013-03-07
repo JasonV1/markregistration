@@ -1,4 +1,5 @@
 <h3><?php echo $header; ?></h3>
+<div class='viewall'>
 <table>
 	<tr>
 		<th>id </th>
@@ -10,5 +11,6 @@
 	</tr>
 <?php echo $show_table; ?>
 </table>
+</div>
 <br />
 <a href='../users/adduser'>Add user</a>

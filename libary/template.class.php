@@ -30,7 +30,14 @@
 		{
 			include(ROOT.DS.'application'.DS.'views'.DS.'header.php');
 		}
-		
+		if (file_exists(ROOT.DS.'application'.DS.'views'.DS.'link.php'))
+		{
+			include(ROOT.DS.'application'.DS.'views'.DS.'link.php');
+		}
+		else
+		{
+			echo "Ja dag, die bestaat niet";
+		}
 		if (file_exists(ROOT.DS.'application'.DS.'views'.DS.$this->_controller.DS.$this->_action.'.php'))
 		{
 			include(ROOT.DS.'application'.DS.'views'.DS.$this->_controller.DS.$this->_action.'.php');

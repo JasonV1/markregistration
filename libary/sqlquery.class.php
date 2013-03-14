@@ -61,5 +61,10 @@
 			return $result;
 		}
 	}
+	
+	public function fine_last_inserted_id()
+	{
+		return mysql_insert_id();
+	}
  }
 ?>

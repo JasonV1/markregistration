@@ -14,6 +14,18 @@
 			<td><input type='text' name='surname' value='<?php echo $surname; ?>' /></td>
 		</tr>
 		<tr>
+			<td>E-mailadres</td>
+			<td><input type='text' name='emailaddress' value='<?php echo $emailaddress; ?>' /></td>
+		</tr>
+		<tr>
+			<td>Gebruikersrol</td>
+			<td><input type='text' name='userrole' value='<?php echo $userrole; ?>' /></td>
+		</tr>
+		<tr>
+			<td>Wachtwoord</td>
+			<td><input type='text' name='password' value='<?php echo $password; ?>' /></td>
+		</tr>
+		<tr>
 			<td>&nbsp;</td>
 			<td><input type='submit' name='submit' value='Update' /></td>
 		</tr>

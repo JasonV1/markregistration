@@ -12,6 +12,8 @@
 		$this->set('firstname', $_POST['firstname']);
 		$this->set('infix', $_POST['infix']);
 		$this->set('surname', $_POST['surname']);
+		$this->set('emailaddress', $_POST['emailaddress']);
+		$this->set('userrole', $_POST['userrole']);
 		$this->set('announcement', 'Het volgende record is toegevoegd');
 		$this->_model->insert_into_users($_POST);
 		header("refresh:4;url=../users/viewall");
@@ -27,18 +29,20 @@
 		foreach ($all_users as $value)
 		{
 			$show_table .= "<tr>
-								<td>".$value['User']['id']."</td>
+								<td>".$value['User']['user_id']."</td>
 								<td>".$value['User']['firstname']."</td>
 								<td>".$value['User']['infix']."</td>
 								<td>".$value['User']['surname']."</td>
+								<td>".$value['Login']['emailaddress']."</td>
+								<td>".$value['Userrole']['userrole']."</td>
 								<td>
-									<a href='./removeuser/".$value['User']['id']."'>
+									<a href='./removeuser/".$value['User']['user_id']."'>
 									<img src='../public/img/kruisje.png' 
 									alt='drop'/>
 									</a>
 								</td>
 								<td>
-									<a href='./updateuser/".$value['User']['id']."'>
+									<a href='./updateuser/".$value['User']['user_id']."'>
 									<img src='../public/img/b_edit.png' 
 									alt='drop'/>
 									</a>
@@ -65,10 +69,13 @@
 		}
 		$this->set('header', 'Wijzig record');
 		$user = $this->_model->finduser($id);
-		$this->set('id', $user[0]['User']['id']);
-		$this->set('firstname', $user[0]['User']['firstname']);
-		$this->set('infix', $user[0]['User']['infix']);
-		$this->set('surname', $user[0]['User']['surname']);
+		$this->set('id', $user['User']['user_id']);
+		$this->set('firstname', $user['User']['firstname']);
+		$this->set('infix', $user['User']['infix']);
+		$this->set('surname', $user['User']['surname']);
+		$this->set('emailaddress', $user['Login']['emailaddress']);
+		$this->set('userrole', $user['Userrole']['userrole']);
+		$this->set('password', $user['Login']['password']);
 		//var_dump($user);
 	}
 	
@@ -119,6 +126,25 @@
 			$this->set('header', $header);
 			header('refresh:4;url=../users/viewall');
 		}
+	}
+	
+	public function logout()
+	{
+		if(isset($_SESSION['userrole']))
+		{
+			session_destroy();
+			header('location:../users/logout');
+		}
+		else
+		{
+			$this->set('header', 'U bent succesvol uitgelogd, u wordt doorgestuurd naar home');
+			header('refresh:4;url=../users/generalhomepage');
+		}
+	}
+	
+	public function generalhomepage()
+	{
+		$this->set('header', 'Welkom bij het cijferregistratie systeem van MBO-Utrecht.');
 	}
  }
 ?>

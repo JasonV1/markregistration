@@ -6,6 +6,8 @@
 		<th>voornaam</th>
 		<th>tussenvoegsel</th>
 		<th>achternaam</th>
+		<th>e-mailadres</th>
+		<th>gebruikersrol</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
 	</tr>
@@ -13,4 +15,3 @@
 </table>
 </div>
 <br />
-<a href='../users/adduser'>Add user</a>

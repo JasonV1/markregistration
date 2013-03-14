@@ -3,7 +3,9 @@
  { 
 	public function select_all()
 	{
-		return $this->query("select * from users");
+		return $this->query("SELECT * FROM `users`, `logins`, `userroles`
+						     WHERE `users`.`user_id` = `logins`.`login_id`
+							 AND   `userroles`.`userrole_id` = `logins`.`login_id`");
 	}
 	
 	public function updateuser($post, $id)
@@ -11,32 +13,60 @@
 		$query = "UPDATE `users` SET `firstname` = '".$post['firstname']."',
 									 `infix` = '".$post['infix']."',
 									 `surname` = '".$post['surname']."'
-					WHERE `id` = '".$id."'";
-		$this->query($query);
+					WHERE `user_id` = '".$id."'";
+					
+		$this->query("UPDATE `users` SET `firstname` = '".$post['firstname']."',
+									 `infix` = '".$post['infix']."',
+									 `surname` = '".$post['surname']."'
+					WHERE 			 `user_id` = '".$id."'");
+					
+		$this->query("UPDATE `logins` SET `emailaddress` = '".$post['emailaddress']."',
+										  `password` 	 = '".$post['password']."'
+					  WHERE 			  `login_id` 	 = '".$id."'");
+					  
+		$this->query("UPDATE `userroles` SET `userrole` = '".$post['userrole']."'
+					  WHERE 				 `userrole_id` = '".$id."'");
 	}
 	
 	public function removeuser($id)
 	{
-		$query = "DELETE FROM `users` WHERE `id` = '".$id."'";
+		$query = "DELETE FROM `users` WHERE `user_id` = '".$id."'";
 		$this->query($query);
 	}
 	
 	public function finduser($id)
 	{
-		$query = "SELECT * FROM `users` WHERE `id` = '".$id."'";
-		return $this->query($query);
+		$query = "SELECT * FROM `users`, `logins`, `userroles`
+				  WHERE `user_id` = '".$id."'
+				  AND `login_id` = '".$id."'
+				  AND `userrole_id` = '".$id."'";
+		return $this->query($query, 1);
 	}
 	
-	public function insert_into_users($post_array)
+	public function insert_into_users($post)
 	{
-		$this->query("INSERT INTO `users` (`id`, 
+		$this->query("INSERT INTO `logins` ( `login_id`,
+										 `emailaddress`,
+										 `password`)
+				  VALUES			   ( NULL,
+										 '".$post['emailaddress']."',
+										 '".$post['password']."')");
+		//Vind het autonummering id
+		$id = $this->fine_last_inserted_id();
+		
+		$this->query("INSERT INTO `users` (`user_id`, 
 										   `firstname`, 
 										   `infix`, 
 										   `surname`)
-								VALUES 	   ( null,
-											 '".$post_array['firstname']."',
-											 '".$post_array['infix']."',
-											 '".$post_array['surname']."')");
+								VALUES 	   ( '".$id."',
+											 '".$post['firstname']."',
+											 '".$post['infix']."',
+											 '".$post['surname']."')");
+											 
+		$this->query("INSERT INTO `userroles` ( `userrole`,
+												`userrole`)
+					  VALUES				(	'".$id."',
+												'".$post['userrole']."')");
 	}
 	
 	public function select_user_from_login($post)

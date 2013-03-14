@@ -38,5 +38,14 @@
 											 '".$post_array['infix']."',
 											 '".$post_array['surname']."')");
 	}
+	
+	public function select_user_from_login($post)
+	{
+		$query = "SELECT * FROM `logins`, `userroles`
+				  WHERE `logins`.`login_id` = `userroles`.`userrole_id`
+				  AND `logins`.`emailaddress` = '".$post['username']."'
+				  AND `logins`.`password` = '".$post['password']."'";
+		return $this->query($query);
+	}
  }
 ?>

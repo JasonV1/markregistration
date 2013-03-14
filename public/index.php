@@ -6,5 +6,6 @@
 	//ternary operator
 	$url = (isset($_GET['url']) ? $_GET['url'] : header("location:./users/viewall"));
 	//echo $url;
+	session_start();
 	require_once(ROOT.DS.'libary'.DS.'bootstrap.php');
 ?>

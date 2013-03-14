@@ -22,6 +22,10 @@
 	public function render()
 	{
 		extract($this->_variables);
+		if (file_exists(ROOT.DS.'public'.DS.'js'.DS.'jquery-code.js'))
+		{
+			include(ROOT.DS.'public'.DS.'js'.DS.'jquery-code.js');
+		}
 		if (file_exists(ROOT.DS.'application'.DS.'views'.DS.$this->_controller.DS.'header.php'))
 		{
 			include(ROOT.DS.'application'.DS.'views'.DS.$this->_controller.DS.'header.php');

@@ -13,7 +13,6 @@
 		$this->set('infix', $_POST['infix']);
 		$this->set('surname', $_POST['surname']);
 		$this->set('announcement', 'Het volgende record is toegevoegd');
-		
 		$this->_model->insert_into_users($_POST);
 		header("refresh:4;url=../users/viewall");
 	}
@@ -71,6 +70,55 @@
 		$this->set('infix', $user[0]['User']['infix']);
 		$this->set('surname', $user[0]['User']['surname']);
 		//var_dump($user);
+	}
+	
+	public function login()
+	{
+		//var_dump($_POST);
+		if (!empty($_POST['username']) && !empty($_POST['password']))
+		{
+			$user = $this->_model->select_user_from_login($_POST);
+			if ( sizeof($user) > 0)
+			{
+				$_SESSION['userrole'] = $user[0]['Userrole']['userrole'];
+				switch($user[0]['Userrole']['userrole'])
+				{
+					
+					case 'student':
+						
+						$homepage = '../students/homepage';
+					break;
+					case 'teacher':
+						$homepage = '../teachers/homepage';
+					break;
+					case 'root':
+						$homepage = '../roots/homepage';
+					break;
+					case 'administrator':
+						$homepage = '../administrators/homepage';
+					break;
+					default:
+				}
+				
+				$header = "Inlog succesvol<br />
+					       U wordt nu doorgestuurd naar de homepage";
+			}
+			else
+			{
+				$header = "Inlog onsuccesvol<br />
+						   En nu opzouten";
+				$homepage = '../users/viewall';
+			}
+			$this->set('header', $header);
+			header('refresh:4;url='.$homepage);
+		}
+		else
+		{
+			$header = "U heeft een van de velden of beiden niet ingevuld.<br />
+					   U wordt doorgestuurd naar de homepage.";
+			$this->set('header', $header);
+			header('refresh:4;url=../users/viewall');
+		}
 	}
  }
 ?>

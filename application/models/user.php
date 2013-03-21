@@ -1,6 +1,12 @@
 <?php
  class User extends Model
  { 
+	public function select_userroles()
+	{
+		$query = "SELECT DISTINCT `userrole` FROM `userroles`";
+		return $this->query($query);
+	}
+	
 	public function select_all()
 	{
 		return $this->query("SELECT * FROM `users`, `logins`, `userroles`
@@ -63,10 +69,10 @@
 											 '".$post['infix']."',
 											 '".$post['surname']."')");
 											 
-		$this->query("INSERT INTO `userroles` ( `userrole`,
-												`userrole`)
-					  VALUES				(	'".$id."',
-												'".$post['userrole']."')");
+		$this->query("INSERT INTO `userroles` ( `userrole_id`,
+											   `userrole`)
+					  VALUES				 ( '".$id."',
+											   '".$post['userrole']."')");
 	}
 	
 	public function select_user_from_login($post)

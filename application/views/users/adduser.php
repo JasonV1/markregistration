@@ -19,7 +19,11 @@
 		</tr>
 		<tr>
 			<td>gebruikersrol:</td>
-			<td><input type='text' name='userrole' placeholder='Hier de gebruikersrol' /></td>
+			<td>
+				<select name='userrole'>
+					<?php echo $userroles; ?>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td>password:</td>

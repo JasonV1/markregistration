@@ -3,8 +3,15 @@
  {
 	public function adduser()
 	{
+		$roles = $this->_model->select_userroles();
 		$headertekst = "Vul hieronder uw gegevens in";
 		$this->set('headertekst', $headertekst);
+		$userroles = '';
+		foreach ($roles as $value)
+		{
+			$userroles .= "<option value=".$value['Userrole']['userrole'].">".$value['Userrole']['userrole']."</option>";
+		}
+		$this->set('userroles', $userroles);
 	}
 	
 	public function add()

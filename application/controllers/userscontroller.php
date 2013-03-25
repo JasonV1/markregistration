@@ -111,6 +111,9 @@
 					case 'administrator':
 						$homepage = '../administrators/homepage';
 					break;
+					case 'studycoordinator':
+						$homepage = '../studycoordinators/homepage';
+					break;
 					default:
 				}
 				

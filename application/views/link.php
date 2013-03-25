@@ -13,7 +13,11 @@
 				break;
 				case 'administrator':
 					echo "<li><a href='".BASE_URL."users/adduser'>Add User</a></li>";
-					echo "<li><a href='".BASE_URL."users/viewall'>View All</a></li>";
+					echo "<li><a href='".BASE_URL."users/viewall'>All Users</a></li>";
+				break;
+				case 'studycoordinator':
+					echo "<li><a href='".BASE_URL."studycoordinators/add_courses'>Add Course</a></li>";
+					echo "<li><a href='".BASE_URL."studycoordinators/add_report'>Add Report</a></li>";
 				break;
 				default:
 			}

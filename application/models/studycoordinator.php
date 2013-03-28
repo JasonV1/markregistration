@@ -23,5 +23,23 @@
 										  '".$post['teacher_id']."')";
 		$this->query($query);
 	}
+	
+	public function insert_into_class($post)
+	{
+		$query = "INSERT INTO `class` ( `class_id`,
+										  `class`,
+										  `mentor`,
+										  `year`)
+				  VALUES				( NULL,
+										  '".$post['class']."',
+										  '".$post['mentor']."',
+										  '".$post['year']."')";
+		return $this->query($query);
+	}
+	
+	public function select_all_classes()
+	{
+		$query = "SELECT * FROM `class`";
+	}
  }
 ?>

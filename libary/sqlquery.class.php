@@ -29,6 +29,10 @@
 	public function query($query, $singleResult=0)
 	{
 		$this->_result = mysql_query($query, $this->_dbHandle);
+		if ( $this->_result == 0 )
+		{
+			return 1;
+		}
 		if ( preg_match("/select/i", $query))
 		{
 			$result = array();
@@ -59,6 +63,10 @@
 			}
 			mysql_free_result($this->_result);
 			return $result;
+		}
+		if ( $this->_result == 0 )
+		{
+			return 1;
 		}
 	}
 	

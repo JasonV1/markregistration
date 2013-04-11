@@ -148,5 +148,15 @@
 			$this->set('year', $year);
 		$this->set('mentor', $mentor);
 	}
+	
+	public function test()
+	{
+		$this->set('header', "Hallo");
+	}
+	
+	public function ruijter()
+	{
+		$this->set('header', "Hallo, ik ben de studiecoördinator");
+	}
  }
 ?>

@@ -12,7 +12,7 @@ body
 
 #container
 {
-	border:1px solid red;
+	border:0px solid red;
 	width:60%;
 	margin:auto;
 	margin-top:20px;
@@ -20,13 +20,15 @@ body
 
 #banner, #footer
 {
-	border:1px solid red;
+	background-color:red;
+	border-radius: 10px;
+	border:0px solid red;
 	text-align:center;
 }
 
 #content
 {
-	border:1px solid blue;
+	border:0px solid blue;
 	min-height:300px;
 	position:relative;
 	width:60%;
@@ -42,7 +44,7 @@ body
 
 #link
 {
-	border:1px solid purple;
+	border:0px solid purple;
 	position:absolute;
 	right:780px;
 	min-width:80px;

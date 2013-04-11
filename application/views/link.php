@@ -19,6 +19,8 @@
 					echo "<li><a href='".BASE_URL."studycoordinators/add_class'>Add Class</a></li>";
 					echo "<li><a href='".BASE_URL."studycoordinators/add_courses'>Add Course</a></li>";
 					echo "<li><a href='".BASE_URL."studycoordinators/add_report'>Add Report</a></li>";
+					echo "<li><a href='".BASE_URL."studycoordinators/test'>Test</a></li>";
+					echo "<li><a href='".BASE_URL."studycoordinators/ruijter'>Ruijter</a></li>";
 				break;
 				default:
 			}

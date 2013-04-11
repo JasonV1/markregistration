@@ -56,7 +56,7 @@
 	
 		if ( isset($_POST['submit']))
 		{
-			$this->_model->insert_into_courses($_POST);
+			$this->_model->insert_into_reports($_POST);
 			$style = "<style>
 						h3.header { color:white;}
 						p.header { background-color: green; 
@@ -66,8 +66,8 @@
 						
 					  </style>";
 			$this->set('style', $style);
-			$this->set('header', 'Het vak is toegevoegd');
-			header('refresh:4;url=./add_courses');
+			$this->set('header', 'Het rapport is toegevoegd');
+			header('refresh:4;url=./add_report');
 		}
 		else
 		{
@@ -88,8 +88,15 @@
 			}
 			$this->set('term', $term);
 			
-			$class = "";
-			$this->_model->select_all_classes();
+			$class = '';
+			$classes = $this->_model->select_all_classes();
+			foreach ($classes as $value)
+			{
+				$class .= "<option value='".$value['Cla']['class_id']."'>".
+											$value['Cla']['class'].
+						  "</option>";
+			}
+			$this->set("class", $class);
 	}
 	
 	public function add_class()
@@ -147,6 +154,38 @@
 			}
 			$this->set('year', $year);
 		$this->set('mentor', $mentor);
+	}
+	
+	public function report_overview()
+	{
+		$this->set('header', "Overzicht Rapporten");
+		$all_reports = $this->_model->select_all_from_reports();
+		//var_dump($all_reports);
+		$reports = "";
+		foreach ( $all_reports as $value )
+		{
+			$reports = "<tr>
+							<td>".$value['Report']['id']."</td>
+							<td>".$value['Report']['year']."</td>
+							<td>".$value['Report']['term']."</td>
+							<td>".$value['Cla']['class']."</td>
+							<td><a href='../studycoordinators/view_courses_in_reports'><img src='../public/img/b_view.png' 
+									alt='edit'/></a></td>
+							<td><a href='../studycoordinators/add_courses_in_reports'><img src='../public/img/b_edit.png' 
+									alt='drop'/></a></td>
+						</tr>";
+		}
+		$this->set('reports', $reports);
+	}
+	
+	public function view_courses_in_reports()
+	{
+		$this->set('header', "Vakken in het rapport");
+	}
+	
+	public function add_courses_in_reports()
+	{
+		$this->set('header', "Voeg vakken toe of verwijder in het rapport");
 	}
 	
 	public function test()

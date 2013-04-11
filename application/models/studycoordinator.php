@@ -40,6 +40,28 @@
 	public function select_all_classes()
 	{
 		$query = "SELECT * FROM `class`";
+		return $this->query($query);
+	}
+	
+	public function insert_into_reports($post)
+	{
+		$query = "INSERT INTO `reports` ( `id`,
+										  `year`,
+										  `term`,
+										  `class`)
+				  VALUES				( NULL,
+										  '".$post['year']."',
+										  '".$post['term']."',
+										  '".$post['class']."')";
+		$this->query($query);
+	}
+	
+	public function select_all_from_reports()
+	{
+		$query = "SELECT *
+				  FROM `reports`, `class`
+				  WHERE `reports`.`id` = `class`.`class`";
+		return $this->query($query);
 	}
  }
 ?>

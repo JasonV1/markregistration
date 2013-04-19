@@ -60,8 +60,55 @@
 	{
 		$query = "SELECT *
 				  FROM `reports`, `class`
-				  WHERE `reports`.`id` = `class`.`class`";
+				  WHERE `reports`.`class` = `class`.`class_id`";
 		return $this->query($query);
+	}
+	
+	public function select_all_courses()
+	{
+		$query = "SELECT * 
+				  FROM `courses`";
+		return $this->query($query);
+	}
+	
+	public function select_all_teachers()
+	{
+		$query = "SELECT * 
+				  FROM `users`, `userroles`
+				  WHERE `users`.`user_id` = `userroles`.`userrole_id`
+				  AND `userroles`.`userrole` = 'teacher'";
+		return $this->query($query);
+	}
+	
+	public function insert_into_courses_in_report($post, $id)
+	{
+		
+		
+		$query = "INSERT INTO `courses_in_reports`
+				  VALUES	   ( NULL,
+								 '".$id."',
+								 '".$post['course']."',
+								 '".$post['teacher']."')";
+		$this->query($query);
+	}
+	
+	public function select_courses_in_report($id)
+	{
+		$query = "SELECT * 
+				  FROM `courses`, `courses_in_reports`, `users`
+				  WHERE `courses`.`course_id` = `courses_in_reports`.`courses_id`
+				  AND `courses_in_reports`.`reports_id` = '".$id."'
+				  AND `courses_in_reports`.`teachers_id` = `users`.`user_id`
+				  ORDER BY `courses`.`course_id`";
+		return $this->query($query);
+	}
+	
+	public function remove_course_in_report($course_id, $report_id)
+	{
+		$query = "DELETE FROM `courses_in_reports`
+				  WHERE `courses_id` = '".$course_id."'
+				  AND 	`reports_id` = '".$report_id."'";
+		$this->query($query);
 	}
  }
 ?>

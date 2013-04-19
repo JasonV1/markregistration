@@ -104,9 +104,9 @@
 		if ( isset($_POST['submit']))
 		{
 			$succes = $this->_model->insert_into_class($_POST);
-			if ($failure)
+			if ($succes)
 			{
-				$failure = "<style>
+				$style = "<style>
 							h3.header { color:white;}
 							p.header { background-color: red; 
 								   width:300px; 
@@ -119,9 +119,9 @@
 			}
 			else
 			{
-				$failure = "<style>
+				$style = "<style>
 							h3.header { color:white;}
-							p.header { background-color: red; 
+							p.header { background-color: green; 
 								   width:300px; 
 								   height:20px;
 								   padding:1em;}
@@ -129,7 +129,6 @@
 				$this->set('header', 'De klas is toegevoegd');
 			}
 			$this->set('style', $style);
-			$this->set('failure', $failure);
 			header('refresh:4;url=./add_class');
 		}
 		else
@@ -164,38 +163,95 @@
 		$reports = "";
 		foreach ( $all_reports as $value )
 		{
-			$reports = "<tr>
+			$reports .= "<tr>
 							<td>".$value['Report']['id']."</td>
 							<td>".$value['Report']['year']."</td>
 							<td>".$value['Report']['term']."</td>
 							<td>".$value['Cla']['class']."</td>
-							<td><a href='../studycoordinators/view_courses_in_reports'><img src='../public/img/b_view.png' 
-									alt='edit'/></a></td>
-							<td><a href='../studycoordinators/add_courses_in_reports'><img src='../public/img/b_edit.png' 
-									alt='drop'/></a></td>
+							<td>
+								<a href='../studycoordinators/view_courses_in_reports/".
+									$value['Report']['id']."'>
+									<img src='../public/img/b_view.png' alt='view'/>
+								</a>
+							</td>
+							<td><a href='../studycoordinators/add_courses_in_reports/".$value['Report']['id']."'>
+									<img src='../public/img/b_edit.png' alt='drop'/>
+								</a>
+							</td>
 						</tr>";
 		}
 		$this->set('reports', $reports);
 	}
 	
-	public function view_courses_in_reports()
+	public function view_courses_in_reports($id)
 	{
+		$courses = $this->_model->select_courses_in_report($id);
+		//var_dump($courses);
+		$tbl_courses = "";
+		foreach ( $courses as $value )
+		{
+			$tbl_courses .= "<tr>
+								<td>".$value['Course']['course_id']."</td>
+								<td>".$value['Course']['course']."</td>
+								<td>".$value['Course']['course_description']."</td>
+								<td>".$value['Course']['number_of_marks']."</td>
+								<td>".$value['User']['surname']."</td>
+								<td>
+									<a href='../remove_course_in_report/".
+												$value['Course']['course_id']."/".
+												$id."'>
+										<img src='../../public/img/kruisje.png' alt='remove' />
+									</a>
+								</td>
+							 </tr>";
+		}
+		$this->set("table", $tbl_courses);
 		$this->set('header', "Vakken in het rapport");
 	}
 	
-	public function add_courses_in_reports()
+	public function add_courses_in_reports($id)
 	{
-		$this->set('header', "Voeg vakken toe of verwijder in het rapport");
+		if ( isset($_POST['submit']) )
+		{
+			$this->_model->insert_into_courses_in_report($_POST, $id);
+			header('location:../report_overview');
+		}
+		else
+		{
+			$all_courses = $this->_model->select_all_courses();
+			//var_dump($all_courses);
+			$courses = "";
+			foreach ( $all_courses as $value )
+			{
+				 $courses .= "<option value='".$value['Course']['course_id']."'>".
+									$value['Course']['course'].
+							"</option>";
+			}
+			$this->set('courses', $courses);
+
+			$all_teachers = $this->_model->select_all_teachers();
+			//var_dump($all_teachers);
+			$teachers = "";
+			foreach ( $all_teachers as $value )
+			{
+				 $teachers .= "<option value='".$value['User']['user_id']."'>".
+									$value['User']['firstname']." ".
+									$value['User']['infix']." ".
+									$value['User']['surname'].
+							"</option>";
+			}
+			$this->set('teachers', $teachers);
+		}
+		$this->set('report_id', $id);
+		$this->set("header", "Add Courses to report");
 	}
 	
-	public function test()
+	public function remove_course_in_report($course_id, $report_id)
 	{
-		$this->set('header', "Hallo");
-	}
-	
-	public function ruijter()
-	{
-		$this->set('header', "Hallo, ik ben de studiecoördinator");
+		$this->_model->remove_course_in_report($course_id, $report_id);
+		//echo "echo <a href='../../view_courses_in_reports/".$reports_id."'>test</a>";exit();
+		$url = "location:../../view_courses_in_reports/".$reports_id."";
+		header($url);
 	}
  }
 ?>

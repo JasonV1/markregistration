@@ -95,11 +95,12 @@
 			if ( sizeof($user) > 0)
 			{
 				$_SESSION['userrole'] = $user[0]['Userrole']['userrole'];
+				$_SESSION['id'] = $user[0]['Login']['login_id'];
+				echo $_SESSION['id'];
 				switch($user[0]['Userrole']['userrole'])
 				{
 					
 					case 'student':
-						
 						$homepage = '../students/homepage';
 					break;
 					case 'teacher':

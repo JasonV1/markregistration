@@ -15,4 +15,11 @@ td, th
 		<th>&nbsp;</th>
 	</tr>
 	<?php echo $students; ?>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td><input type='submit' value='Verstuur' /></td>
+	</tr>
 </table>

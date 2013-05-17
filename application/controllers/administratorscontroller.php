@@ -10,7 +10,7 @@
 	{
 		if ( isset($_POST['submit']) )
 		{
-			var_dump($_POST);
+			//var_dump($_POST);
 			for ( $i = 0; $i < sizeof($_POST['id']); $i++)
 			{
 				
@@ -21,7 +21,7 @@
 		$select_students = $this->_model->select_all_students();
 		//var_dump($select_students);
 		$select_class = $this->_model->select_all_classes();
-		var_dump($select_class);
+		//var_dump($select_class);
 		$students = "";
 		foreach ($select_students as $value)
 		{
@@ -32,15 +32,22 @@
 							<td>".$value['User']['infix']."</td>
 							<td>".$value['User']['surname']."</td>
 							<td>
-								<select name=''>
-									<option>-kies een klas-</option>";
+								<select name='class[]'>
+									<option value='0'>-kies een klas-</option>";
 									foreach ($select_class as $class)
 									{
-										$students .= "<option>".$class['Cla']['class']."</option>";
+										$students .= "<option ";
+										if ($class['Cla']['class_id'] == $find_class['Students_cla']['class'])
+										{
+											$students .= "selected";
+										}
+										$students .= "value='".$class['Cla']['class_id']."'>".$class['Cla']['class']."</option>";
 									}
 							 $students .= "</select>
 							</td>
-						  </tr>";
+						  </tr>
+						  <input type='hidden' name='id[]' value='".$value['User']['user_id']."' />";
+						  
 		}
 		$this->set('header', 'Plaats de onderstaande studenten in een klas');
 		$this->set('students', $students);

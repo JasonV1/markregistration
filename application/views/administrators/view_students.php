@@ -5,6 +5,7 @@ td, th
 }
 </style>
 <h3><?php echo $header; ?></h3>
+<form action='<?php echo BASE_URL; ?>administrators/view_students' method='post'>
 <table>
 	<tr>
 		<th>id</th>
@@ -20,6 +21,6 @@ td, th
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
-		<td><input type='submit' value='Verstuur' /></td>
+		<td><input type='submit' name='submit' value='Verstuur' /></td>
 	</tr>
 </table>

@@ -1,0 +1,2 @@
+# Module com.adruijter.kingsvalley1.GwtDefinition
+# RPC service class, partial path of RPC policy file

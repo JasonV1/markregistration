@@ -5,10 +5,10 @@
 	{
 		$this->set('header', 'Dit is de teachers homepage');
 	}
-	
+
 	public function view_marks()
 	{
-		$this->set('header', 'Overzicht cijfers');
+		$this->set('header', 'Overzicht in te vullen cijfers');
 		$view_courses = $this->_model->find_courses_by_teacher_id();
 		//var_dump($view_courses);
 		$courses = "";
@@ -16,7 +16,7 @@
 		{
 			$courses .= "<tr>
 							<td>".$value['Report']['year']."</td>
-							<td>".$value['Cla']['class']."</td>
+							<td>".$value['Cla']['class']."</td>							
 							<td>".$value['Report']['term']."</td>
 							<td>".$value['Course']['course']."</td>
 							<td>".$value['Course']['number_of_marks']."</td>
@@ -24,29 +24,28 @@
 								<a href='../teachers/add_marks/".
 									$value['Cla']['class_id']."/".
 									$value['Report']['year']."/".
-									$value['Course']['number_of_marks']."'>
-									<img src='../public/img/b_edit.png' alt='drop'/>
+									$value['Course']['number_of_marks']."/".
+									$value['Course']['course_id']."'>
+									<img src='../public/img/b_edit.png' alt='edit' />
 								</a>
 							</td>
-						 </tr>";
+						</tr>";
 		}
 		$this->set('courses', $courses);
 	}
-	
-	public function add_marks($class_id, $year, $number_of_marks)
+
+	public function add_marks($class_id, $year, $number_of_marks, $course_id)
 	{
 		if (isset($_POST['submit']))
-		{
-			var_dump($_POST);
-			$this->set("students", "");
-			$this->set("th_marks", "");
+		{		
+			$this->_model->insert_into_grades($_POST);
 		}
-		$this->set('header', 'Invoeren cijfer');
+
+		$this->set('header', 'Voeg uw cijfers toe');
 		$found_students = $this->_model->find_students_by_class_id_and_year($class_id, $year);
-		var_dump($found_students);
-		
+		//var_dump($found_students);
 		$students = "";
-		foreach($found_students as $value)
+		foreach ($found_students as $value)
 		{
 			$students .= "<tr>
 							<td>".$value['User']['user_id']."</td>
@@ -55,22 +54,38 @@
 							<td>".$value['User']['surname']."</td>";
 							for ($i = 0; $i < $number_of_marks; $i++)
 							{
+								$record = $this->_model->find_grade_record($course_id, 
+																 $value['User']['user_id'], 
+																 $i);
+								$record = (!empty($record)) 
+										   ? $this->_model->find_grade_record($course_id, 
+																			  $value['User']['user_id'], $i) : "-";
 								$students .= "<td>
-												<input type='text' name=mark".$i."[] />
-											 </td>";
+												<input type='text' name=mark".$i."[]
+																    value='".
+																	$record['Grade']['mark']
+																	."'/>
+											  </td>";
 							}
-			$students .="</tr>";
-		}
-		
+			$students .= "</tr>
+						  <input type='hidden' value='".$course_id."' name='course_id' />
+						  <input type	= 'hidden' 
+								 value	= '".$value['User']['user_id']."'
+								 name 	= 'user_id[]' />
+						  <input type	= 'hidden'
+								 value	= '".$number_of_marks."'
+								 name	= 'number_of_marks'";
+		}		
 		$this->set("students", $students);
-		
+
 		$th_marks = "";
 		for ($i = 1; $i <= $number_of_marks; $i++)
 		{
-				$th_marks .= "<th>mark".$i."</th>";
+			$th_marks .= "<th>mark ".$i."</th>";
 		}
-							
+
 		$this->set("th_marks", $th_marks);
+		$this->set("url", $class_id."/".$year."/".$number_of_marks."/".$course_id);
 	}
  }
 ?>

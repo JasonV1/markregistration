@@ -33,7 +33,7 @@
 		//echo sizeof($post);
 		for ( $i = 0; $i < sizeof($post['user_id']); $i++)
 		{
-			for ($j = 0; $j < $post['number_of_marks']; $j++)
+			for ($j = 0; $j <= $post['number_of_marks']; $j++)
 			{
 				$grade = $this->find_grade_record($post['course_id'], $post['user_id'][$i], $j );
 				if (empty($grade))

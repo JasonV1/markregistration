@@ -52,19 +52,18 @@
 							<td>".$value['User']['firstname']."</td>
 							<td>".$value['User']['infix']."</td>
 							<td>".$value['User']['surname']."</td>";
-							for ($i = 0; $i < $number_of_marks; $i++)
+							for ($i = 0; $i <= $number_of_marks; $i++)
 							{
 								$record = $this->_model->find_grade_record($course_id, 
 																 $value['User']['user_id'], 
 																 $i);
-								$record = (!empty($record)) 
-										   ? $this->_model->find_grade_record($course_id, 
-																			  $value['User']['user_id'], $i) : "-";
+								$mark = ( empty($record)) ? "-" : $record['Grade']['mark'];
 								$students .= "<td>
-												<input type='text' name=mark".$i."[]
-																    value='".
-																	$record['Grade']['mark']
-																	."'/>
+												<input type='text' 
+													   name=mark".$i."[]
+													   value='".
+													   $mark
+													   ."'/>
 											  </td>";
 							}
 			$students .= "</tr>
@@ -83,6 +82,7 @@
 		{
 			$th_marks .= "<th>mark ".$i."</th>";
 		}
+		$th_marks .= "<th>report mark</th>";
 
 		$this->set("th_marks", $th_marks);
 		$this->set("url", $class_id."/".$year."/".$number_of_marks."/".$course_id);

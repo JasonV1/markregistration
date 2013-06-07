@@ -27,7 +27,7 @@ input[type=submit]
 		<?php echo $students; ?>
 		<tr>
 			<td colspan='4'></td>
-			<td colspan='2'><input type='submit' name='submit' value='verstuur' /></td>
+			<td colspan='3'><input type='submit' name='submit' value='verstuur' /></td>
 		<tr>
 	</form>
 </table>

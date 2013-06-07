@@ -4,16 +4,17 @@
 	public function adduser()
 	{
 		$roles = $this->_model->select_userroles();
+		//var_dump($roles);
 		$headertekst = "Vul hieronder uw gegevens in";
-		$this->set('headertekst', $headertekst);
+		$this->set('headertekst', $headertekst );
 		$userroles = '';
 		foreach ($roles as $value)
 		{
-			$userroles .= "<option value=".$value['Userrole']['userrole'].">".$value['Userrole']['userrole']."</option>";
+			$userroles  .= "<option value=".$value['Userrole']['userrole'].">".$value['Userrole']['userrole']."</option>";			
 		}
 		$this->set('userroles', $userroles);
 	}
-	
+
 	public function add()
 	{
 		$this->set('firstname', $_POST['firstname']);
@@ -25,14 +26,13 @@
 		$this->_model->insert_into_users($_POST);
 		header("refresh:4;url=../users/viewall");
 	}
-	
+
 	public function viewall()
 	{
-		$this->set('header', 'All Users');
+		$this->set('header', 'Alle users in de user tabel');
 		$all_users = $this->_model->select_all();
-		$this->set("all_users", $all_users);
-		$show_table = '';
-		
+		//var_dump($all_users);
+		$show_table = '';		
 		foreach ($all_users as $value)
 		{
 			$show_table .= "<tr>
@@ -44,38 +44,38 @@
 								<td>".$value['Userrole']['userrole']."</td>
 								<td>
 									<a href='./removeuser/".$value['User']['user_id']."'>
-									<img src='../public/img/kruisje.png' 
-									alt='drop'/>
+										<img src='../public/img/drop.png' alt='drop' />
 									</a>
 								</td>
 								<td>
 									<a href='./updateuser/".$value['User']['user_id']."'>
-									<img src='../public/img/b_edit.png' 
-									alt='drop'/>
+										<img src='../public/img/edit.png' alt='edit' />
 									</a>
 								</td>
 							</tr>";
 		}
-		$this->set('show_table', $show_table);
+		$this->set('show_table', $show_table);		
 	}
-	
+
 	public function removeuser($id)
 	{
 		$this->_model->removeuser($id);
-	
+
 		header('location:../viewall');
 	}
-	
+
 	public function updateuser($id)
 	{
 		if (isset($_POST['submit']))
 		{
 			//var_dump($_POST);
-			$user = $this->_model->updateuser($_POST, $id);
-			header('location:../viewall');
+			$this->_model->updateuser($_POST, $id);
+			header("location:../viewall");
 		}
-		$this->set('header', 'Wijzig record');
+		$this->set('header', 'Wijzig het onderstaande record');
+		$this->set('test', "Voor post");
 		$user = $this->_model->finduser($id);
+		var_dump($user);
 		$this->set('id', $user['User']['user_id']);
 		$this->set('firstname', $user['User']['firstname']);
 		$this->set('infix', $user['User']['infix']);
@@ -83,23 +83,23 @@
 		$this->set('emailaddress', $user['Login']['emailaddress']);
 		$this->set('userrole', $user['Userrole']['userrole']);
 		$this->set('password', $user['Login']['password']);
-		//var_dump($user);
+
 	}
-	
+
 	public function login()
 	{
 		//var_dump($_POST);
 		if (!empty($_POST['username']) && !empty($_POST['password']))
-		{
+		{			
 			$user = $this->_model->select_user_from_login($_POST);
+			//var_dump($user);
 			if ( sizeof($user) > 0)
 			{
 				$_SESSION['userrole'] = $user[0]['Userrole']['userrole'];
 				$_SESSION['id'] = $user[0]['Login']['login_id'];
 				echo $_SESSION['id'];
-				switch($user[0]['Userrole']['userrole'])
+				switch ($user[0]['Userrole']['userrole'])
 				{
-					
 					case 'student':
 						$homepage = '../students/homepage';
 					break;
@@ -116,32 +116,31 @@
 						$homepage = '../studycoordinators/homepage';
 					break;
 					default:
-				}
-				
-				$header = "Inlog succesvol<br />
-					       U wordt nu doorgestuurd naar de homepage";
+				}			
+				$header = "U bent succesvol ingelogd<br />
+					   U wordt doorgestuurd naar uw homepage";
 			}
 			else
 			{
-				$header = "Inlog onsuccesvol<br />
-						   En nu opzouten";
-				$homepage = '../users/viewall';
-			}
+				$header = "De combinatie van gebruikernaam en wachtwoord is ons niet bekent.<br />
+						   U wordt doorgestuurd naar de homepage";
+				$homepage = '../users/generalhomepage';
+			}					
 			$this->set('header', $header);
 			header('refresh:4;url='.$homepage);
 		}
 		else
 		{
 			$header = "U heeft een van de velden of beiden niet ingevuld.<br />
-					   U wordt doorgestuurd naar de homepage.";
+					   U wordt doorgestuurd naar de homepage";					   
 			$this->set('header', $header);
 			header('refresh:4;url=../users/viewall');
 		}
 	}
-	
+
 	public function logout()
 	{
-		if(isset($_SESSION['userrole']))
+		if (isset($_SESSION['userrole']))
 		{
 			session_destroy();
 			header('location:../users/logout');
@@ -152,10 +151,10 @@
 			header('refresh:4;url=../users/generalhomepage');
 		}
 	}
-	
+
 	public function generalhomepage()
 	{
-		$this->set('header', 'Welkom bij het cijferregistratie systeem van MBO-Utrecht.');
+		$this->set('header', "Welkom bij het cijferregistratie systeem van MBO-Utrecht");
 	}
  }
 ?>

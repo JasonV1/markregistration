@@ -55,32 +55,71 @@
 	{
 		$this->set("header", "Rapport");
 		$th_table = "";
-		
 
 		$result = $this->_model->find_courses_report_by_report_id($report_id);
-		var_dump($result);
-		foreach ($result as $value)
-		{
-			$value['Course']['number_of_marks'];
-		}
+		//var_dump($result);
 
 		$report = "";
-
+		
+		//Maximaal aantal number of marks
+		$max = 0;
 		foreach ($result as $value)
 		{
-			$marks = $this->_model->find_marks_by_course_id_and_student_id($value['Course']['course_id']);
-			var_dump($marks);
+			if ($value['Course']['number_of_marks'] > $max)
+			{
+				$max = $value['Course']['number_of_marks'];
+			}
+		}
+		echo $max;
+		$th_table .= "<tr>
+						<th>Vak</th>";
+							  for ($i = 0; $i < $max; $i++)
+							  {
+								$th_table .= "<th>Cijfer".($i + 1)."</th>";
+							  }
+							  
+								$th_table .= "<th colspan='2'>
+											  &nbsp;</th>";
+								$th_table .= "<th>rapportcijfer</th>
+						  </tr>";
+							
+							
+
+		foreach ($result as $value1)
+		{
+			$marks = $this->_model->find_marks_by_course_id_and_student_id($value1['Course']['course_id']);
+			//var_dump($marks);
+			
+			
 			$report .= "<tr>
-							<td>".$value["Course"]["course"]."</td>";
-						foreach ($marks as $value)
-						{
+							<td>".$value1["Course"]["course"]."</td>";
+
+					   foreach ($marks as $value)
+					   {
+							if ($value['Grade']['exam_number'] != $value1['Course']['number_of_marks'])
+							{
 								$report .= "<td>".$value['Grade']['mark']."</td>";
-						}
+							}
+							else
+							{
+								$report .= "<td colspan='".(5 - $value1['Course']['number_of_marks'])."'>&nbsp;</td>
+											<td>".$value['Grade']['mark']."</td>";
+							}
+					   }
+
+					   /*
+					   for ($i = 0; $i < $value['Course']['number_of_marks']; $i++)
+					   {
+							$report .= "<td>".$marks[$i]['Grade']['mark']."</td>";
+					   }*/
 			$report .= "</tr>";
 		}
 
+
 		$this->set("report", $report);
-		var_dump($result);
+		$this->set("th_table", $th_table);
+
+		//var_dump($result);
 	}
  }
 ?>

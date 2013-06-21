@@ -17,7 +17,7 @@
 <?php echo $style; ?>
 <h3 class='header'><p class='header'><?php echo $header; ?></p></h3>
 <table>
-	<form action='./add_report' method='post'>
+	<form action='<?php echo BASE_URL; ?>studycoordinators/add_report' method='post'>
 		<tr>
 			<td>Jaar</td>
 			<td>
@@ -40,6 +40,12 @@
 				<select name='class'>
 					<?php echo $class; ?>
 				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Cesuur blokcijfer</td>
+			<td>
+				<input type='text' name='cesure' />
 			</td>
 		</tr>
 		<tr>

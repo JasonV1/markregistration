@@ -17,6 +17,7 @@ td, th
 		<th>Course description</th>
 		<th>No. of Marks</th>
 		<th>Teacher</th>
+		<th>Weging</th>
 		<th>&nbsp;</th>
 	</tr>
 	<?php echo $table; ?>

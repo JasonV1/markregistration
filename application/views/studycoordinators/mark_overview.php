@@ -17,7 +17,12 @@ input[type=submit]
 
 <h3><?php echo $header; ?></h3>
 <table>
-	
-	<?php echo $th_table; ?>
-	<?php echo $report; ?>
+	<tr>
+		<th>Jaar</th>
+		<th>Blok 1</th>
+		<th>Blok 2</th>
+		<th>Blok 3</th>
+		<th>Blok 4</th>	
+	<tr>
+	<?php echo $reports; ?>
 </table>

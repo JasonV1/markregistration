@@ -196,6 +196,7 @@
 								<td>".$value['Course']['course_description']."</td>
 								<td>".$value['Course']['number_of_marks']."</td>
 								<td>".$value['User']['surname']."</td>
+								<td>".$value['Courses_in_report']['weight']."</td>
 								<td>
 									<a href='../remove_course_in_report/".
 												$value['Course']['course_id']."/".
@@ -253,5 +254,6 @@
 		$url = "location:../../view_courses_in_reports/".$reports_id."";
 		header($url);
 	}
+	
  }
 ?>

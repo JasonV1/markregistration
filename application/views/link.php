@@ -10,6 +10,7 @@
 				break;
 				case 'teacher':
 					echo "<li><a href='".BASE_URL."teachers/view_marks'>View Marks</a></li>";
+					echo "<li><a href='".BASE_URL."teachers/view_reports'>View Reports</a></li>";
 				break;
 				case 'root':
 				break;

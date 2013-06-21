@@ -44,12 +44,12 @@
 								<td>".$value['Userrole']['userrole']."</td>
 								<td>
 									<a href='./removeuser/".$value['User']['user_id']."'>
-										<img src='../public/img/drop.png' alt='drop' />
+										<img src='../public/img/kruisje.png' alt='drop' />
 									</a>
 								</td>
 								<td>
 									<a href='./updateuser/".$value['User']['user_id']."'>
-										<img src='../public/img/edit.png' alt='edit' />
+										<img src='../public/img/b_edit.png' alt='edit' />
 									</a>
 								</td>
 							</tr>";

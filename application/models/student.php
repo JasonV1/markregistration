@@ -32,7 +32,7 @@
 				  AND   `courses_in_reports`.`reports_id` = '".$report_id."'";
 		return $this->query($query);
 	}
-	
+
 	public function find_marks_by_course_id_and_student_id($course_id)
 	{
 		$query = "SELECT * FROM `grades`

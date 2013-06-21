@@ -73,5 +73,41 @@
 		//echo $query; exit();		  
 		return $this->query($query, 1);	
 	}
+	
+	public function find_students_by_report_id($report_id)
+	{
+		$query = "SELECT * FROM `students_class`, `reports`, `users`
+				  WHERE `id` = '".$report_id."'
+				  AND `reports`.`class` = `students_class`.`class`
+				  AND `users`.`user_id` = `students_class`.`student_id`";
+		return $this->query($query);
+	}
+	
+	public function find_marks_by_report_id($report_id, $user_id)
+	{
+		$query = "SELECT * FROM `courses_in_reports`, 
+								`courses`, 
+								`grades`,
+								`users`,
+								`students_class`,
+								`class`,
+								`reports`
+				  WHERE `courses_in_reports`.`reports_id`  = '".$report_id."'
+				  AND   `courses_in_reports`.`courses_id`  = `courses`.`course_id`
+				  AND   `courses`.`course_id` 			   = `grades`.`course_id`
+				  AND   `grades`.`student_id` 			   = '".$user_id."'
+				  AND   `courses`.`number_of_marks`		   = `grades`.`exam_number`
+				  AND   `users`.`user_id`				   = `grades`.`student_id`
+				  AND   `users`.`user_id`				   = `students_class`.`student_id`
+				  AND   `students_class`.`class`	       = `class`.`class_id`
+				  AND	`reports`.`id`					   = `courses_in_reports`.`reports_id`";
+		return $this->query($query);
+	}
+	
+	public function find_mentor_by_id($mentor_id)
+	{
+		$query = "SELECT * FROM `users` WHERE `user_id` = '".$mentor_id."'";
+		return $this->query($query, 1);
+	}
  }
 ?>

@@ -40,5 +40,20 @@
 				  AND `student_id` = '".$_SESSION['id']."'";
 		return $this->query($query);
 	}
+	
+	public function find_student_data_by_id($student_id)
+	{
+		$query = "SELECT * FROM `users`, `class`, `students_class`, `grades`
+				  WHERE `users`.`user_id` = `students_class`.`student_id`
+				  AND `students_class`.`class` = `class`.`class_id`
+				  AND   `users`.`user_id`	   = '".$_SESSION['id']."'";
+		return $this->query($query);
+	}
+	
+	public function find_mentor_by_id($mentor_id)
+	{
+		$query = "SELECT * FROM `users` WHERE `user_id` = '".$mentor_id."'";
+		return $this->query($query, 1);
+	}
  }
 ?>

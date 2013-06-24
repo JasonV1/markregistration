@@ -15,9 +15,17 @@ input[type=submit]
 }
 </style>
 
+
+
 <h3><?php echo $header; ?></h3>
 <table>
 	
 	<?php echo $th_table; ?>
 	<?php echo $report; ?>
 </table>
+
+<SCRIPT LANGUAGE="JavaScript"> 
+if (window.print) {
+document.write('<form><input type=button name=print value="Pagina printen" onClick="window.print()"></form>');
+}
+</script>

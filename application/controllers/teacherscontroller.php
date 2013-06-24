@@ -167,7 +167,7 @@
 
 		$term		  = $found_report_grades[0]['Report']['term'];
 
-		$found_mentor		  = $this->_model->find_mentor_by_id($found_report_grades[0]['Cla']['mentor']);
+		$found_mentor = $this->_model->find_mentor_by_id($found_report_grades[0]['Cla']['mentor']);
 
 		//var_dump($found_mentor);
 

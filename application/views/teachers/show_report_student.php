@@ -43,6 +43,18 @@ td
 	<?php echo $grades; ?>
 	<tr>
 		<th>Blokcijfer</th>
-		<th><?php echo $max_points; ?> | <?php echo $points; ?> | <?php echo $blokcijfer; ?></th>
+		<th><?php echo $blokcijfer; ?></th>
+	</tr>
+	
+	<form action='<?php echo BASE_URL; ?>teachers/show_report_student' method='post'>
+	<tr>
+		<td>Toelichting</td>
+		<td><textarea rows='4' maxlength="150" name='toelichting'></textarea></td>
 	</tr>
 </table>
+
+<SCRIPT LANGUAGE="JavaScript"> 
+if (window.print) {
+document.write('<form><input type=button name=print value="Pagina printen" onClick="window.print()"></form>');
+}
+</script>

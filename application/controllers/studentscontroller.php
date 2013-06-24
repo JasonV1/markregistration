@@ -121,5 +121,34 @@
 
 		//var_dump($result);
 	}
+	
+	public function student_data()	
+	{
+		$this->set("header", "Gegevens student");
+		
+		$student_id = "";
+		
+		$data = $this->_model->find_student_data_by_id($student_id);
+		
+		$name_student = $data[0]['User']['firstname']." ".
+						$data[0]['User']['infix']." ".
+						$data[0]['User']['surname'];
+						
+		$id_student	  = $data[0]['User']['user_id'];
+		
+		$class = 		$data[0]['Cla']['class'];
+		
+		$found_mentor = $this->_model->find_mentor_by_id($data[0]['Cla']['mentor']);
+		
+		$mentor = $found_mentor['User']['firstname']." ".
+				  $found_mentor['User']['infix']." ".
+				  $found_mentor['User']['surname'];
+
+		
+		$this->set("class", $class);
+		$this->set("name_student", $name_student);
+		$this->set("id_student", $id_student);
+		$this->set("mentor", $mentor);
+	}
  }
 ?>

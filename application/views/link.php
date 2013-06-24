@@ -7,6 +7,7 @@
 			{
 				case 'student':
 					echo "<li><a href='".BASE_URL."students/report_overview'>View Marks</a></li>";
+					echo "<li><a href='".BASE_URL."students/student_data'>Student Data</a></li>";
 				break;
 				case 'teacher':
 					echo "<li><a href='".BASE_URL."teachers/view_marks'>View Marks</a></li>";
